@@ -1,21 +1,25 @@
+import { readFileSync } from 'fs';
+import { resolvers } from './resolvers';
+
 const express = require("express");
 const { ApolloServer, gql } = require("apollo-server-express");
+const weatherDefs = readFileSync('./schema/weather.graphql', { encoding: 'utf-8' });
 
-// Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-    type Query {
-        hello: String
-    }
-`;
 
-// Provide resolver functions for your schema fields
-const resolvers = {
-    Query: {
-        hello: () => "Hello world!",
-    },
-};
+// interface MyContext {
+//     dataSources: {
+//       books: Book[];
+//     };
+//   }
+  
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+    weatherDefs,
+    resolvers,
+    mocks: true,
+    playground: true,
+    introspection: true,
+});
 
 const app = express();
 server.applyMiddleware({ app });

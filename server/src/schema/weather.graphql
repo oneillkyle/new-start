@@ -1,0 +1,11 @@
+type Query {
+    "Get tracks array for homepage grid"
+    weather: [Weather!]!
+}
+    
+"A track is a group of Modules that teaches about a specific topic"
+type Weather {
+    id: ID!
+    "The weather's state"
+    state: String!
+}
