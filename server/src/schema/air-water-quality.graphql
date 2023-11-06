@@ -1,0 +1,13 @@
+type Query {
+    "Get tracks array for homepage grid"
+    airWaterQuality: [AirWaterQuality!]!
+}
+    
+"A track is a group of Modules that teaches about a specific topic"
+type AirWaterQuality {
+    airQuality: Float
+    city: String
+    country: String
+    region: String
+    waterPollution: Float
+}
