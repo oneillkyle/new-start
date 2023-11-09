@@ -5,8 +5,8 @@ type Query {
     
 "A track is a group of Modules that teaches about a specific topic"
 type AirWaterQuality {
+    city: String!
     airQuality: Float
-    city: String
     country: String
     region: String
     waterPollution: Float
