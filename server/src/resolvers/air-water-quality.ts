@@ -1,11 +1,11 @@
 import { map } from 'rxjs';
-import { ElasticService } from '../services/elastic';
+import { AirWaterQualityService } from '../services/air-water-quality';
 
 export const airWaterQualityResolvers = {
     Query: {
         //   weather(parent, args, contextValue, info) {
         airWaterQuality() {
-            const service = new ElasticService();
+            const service = new AirWaterQualityService();
             return service
                 .getAll()
                 .then((result) => result.hits.hits.map((hit) => hit._source));

@@ -10,6 +10,7 @@ import {
 import { QueryDslQueryContainer } from '@elastic/elasticsearch/lib/api/types';
 import { from } from 'rxjs';
 
+// Should we use a seperate client per service or just one?
 const client = new Client({
     node: `${ELASTIC_URL}`, // Elasticsearch endpoint
     auth: {
@@ -27,13 +28,11 @@ const client = new Client({
 });
 
 export class ElasticService {
-    #client: Client;
-    #index: string;
-    defaultField = 'city';
-    constructor(index: string = ELASTIC_WEATHER_INDEX) {
-        this.#index = index;
-        this.#client = client;
-    }
+    #client: Client = client;
+    
+    protected index: string = '';
+    protected defaultField: string = '';
+
     getAll(fields?: string[]) {
         return this.search({fields});
     }
@@ -47,7 +46,7 @@ export class ElasticService {
                 query_string: {
                     query: search,
                     fields: searchFields || [],
-                    default_field: 'city'
+                    default_field: this.defaultField
                 }
             },
             fields: returnFields
@@ -59,7 +58,7 @@ export class ElasticService {
         returnFields?: string[];
     }) {
         return this.#client.search({
-                index: this.#index,
+                index: this.index,
                 fields: opts?.returnFields
             })
         // return results;
