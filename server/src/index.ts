@@ -11,13 +11,9 @@ const weatherDefs = readFileSync(
     }
 );
 
-// interface MyContext {
-//     dataSources: {
-//       books: Book[];
-//     };
-//   }
+interface MyContext {}
 
-const server = new ApolloServer({
+const server = new ApolloServer<MyContext>({
     typeDefs: weatherDefs,
     resolvers,
     introspection: true
@@ -25,4 +21,5 @@ const server = new ApolloServer({
 
 startStandaloneServer(server, {
     listen: { port: 4000 }
+    // context: async ({ req }) => ({ token: req.headers.token })
 }).then(() => console.log('listening'));

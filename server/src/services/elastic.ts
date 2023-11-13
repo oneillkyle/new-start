@@ -7,7 +7,7 @@ import {
     ELASTIC_USER,
     ELASTIC_WEATHER_INDEX
 } from '../../secrets';
-import { estypes } from '@elastic/elasticsearch'
+import { estypes } from '@elastic/elasticsearch';
 import { from } from 'rxjs';
 
 // Should we use a seperate client per service or just one?
@@ -29,16 +29,17 @@ const client = new Client({
 
 export abstract class ElasticService<ReturnType> {
     #client: Client = client;
-    
+
     protected index: string = '';
     protected defaultField: string = '';
     protected IReturnType: any;
 
     getAll(fields?: string[]) {
-        return this.search({fields});
+        return this.search({ fields });
     }
+
     simpleSearch(
-        search: string,
+        search: string = '',
         searchFields?: string[],
         returnFields?: string[]
     ) {
@@ -53,15 +54,16 @@ export abstract class ElasticService<ReturnType> {
             fields: returnFields
         });
     }
+
     search(opts: {
         query?: estypes.QueryDslQueryContainer;
         fields?: string[];
         returnFields?: string[];
     }) {
         return this.#client.search<ReturnType>({
-                index: this.index,
-                fields: opts?.returnFields
-            })
-        // return results;
+            index: this.index,
+            fields: opts?.returnFields,
+            query: opts.query || {}
+        });
     }
 }

@@ -29,6 +29,12 @@ export type Query = {
   __typename?: 'Query';
   /** Get tracks array for homepage grid */
   airWaterQuality: Array<AirWaterQuality>;
+  airWaterQualitySearch: Array<AirWaterQuality>;
+};
+
+
+export type QueryAirWaterQualitySearchArgs = {
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -129,6 +135,7 @@ export type AirWaterQualityResolvers<ContextType = any, ParentType extends Resol
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   airWaterQuality?: Resolver<Array<ResolversTypes['AirWaterQuality']>, ParentType, ContextType>;
+  airWaterQualitySearch?: Resolver<Array<ResolversTypes['AirWaterQuality']>, ParentType, ContextType, Partial<QueryAirWaterQualitySearchArgs>>;
 };
 
 export type Resolvers<ContextType = any> = {

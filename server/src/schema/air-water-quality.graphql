@@ -1,6 +1,7 @@
 type Query {
     "Get tracks array for homepage grid"
     airWaterQuality: [AirWaterQuality!]!
+    airWaterQualitySearch(search: String): [AirWaterQuality!]!
 }
     
 "A track is a group of Modules that teaches about a specific topic"
