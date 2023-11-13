@@ -1,3 +1,3 @@
-import { weatherResolvers } from './weather';
+import { airWaterQualityResolvers } from './air-water-quality';
 
-export const resolvers = [weatherResolvers];
+export const resolvers = [airWaterQualityResolvers];

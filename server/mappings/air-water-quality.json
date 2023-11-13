@@ -1,0 +1,36 @@
+{
+    "mappings": {
+        "properties": {
+            "airQuality": {
+                "type": "double"
+            },
+            "city": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "country": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "region": {
+                "type": "text",
+                "fields": {
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "waterPollution": {
+                "type": "double"
+            }
+        }
+    }
+}

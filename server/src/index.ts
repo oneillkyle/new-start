@@ -1,29 +1,25 @@
 import { readFileSync } from 'fs';
+import * as path from 'path';
 import { resolvers } from './resolvers';
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
 
-const express = require("express");
-const { ApolloServer, gql } = require("apollo-server-express");
-const weatherDefs = readFileSync('./schema/weather.graphql', { encoding: 'utf-8' });
+const weatherDefs = readFileSync(
+    path.resolve(__dirname, 'schema/air-water-quality.graphql'),
+    {
+        encoding: 'utf-8'
+    }
+);
 
+interface MyContext {}
 
-// interface MyContext {
-//     dataSources: {
-//       books: Book[];
-//     };
-//   }
-  
-
-const server = new ApolloServer({
-    weatherDefs,
+const server = new ApolloServer<MyContext>({
+    typeDefs: weatherDefs,
     resolvers,
-    mocks: true,
-    playground: true,
-    introspection: true,
+    introspection: true
 });
 
-const app = express();
-server.applyMiddleware({ app });
-
-app.listen({ port: 4000 }, () =>
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
-);
+startStandaloneServer(server, {
+    listen: { port: 4000 }
+    // context: async ({ req }) => ({ token: req.headers.token })
+}).then(() => console.log('listening'));
